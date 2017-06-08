@@ -39,8 +39,8 @@
 
 * 1.2 Elasticsearch + Kibana + FileBeat    
 > 满足基本的日志file的收集处理和UI显示检索，使用filebeat替代Logstash进行数据收集,FileBeat提供了简单的filter机制。  
-
-![img1](imgs/ELK1)  
+  
+![img1](imgs/ELK1.png)  
 
 
 * 1.3 Elasticsearch + Kibana + Logstash + Beats    
