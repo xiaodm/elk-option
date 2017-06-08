@@ -39,12 +39,14 @@
 
 * 1.2 Elasticsearch + Kibana + FileBeat    
 > 满足基本的日志file的收集处理和UI显示检索，使用filebeat替代Logstash进行数据收集,FileBeat提供了简单的filter机制。  
-  
-![img1](imgs/ELK1.png)  
+
+![img1](imgs/ELK1.png)
 
 
-* 1.3 Elasticsearch + Kibana + Logstash + Beats    
-> 满足基本的日志file的收集处理和UI显示检索，使用Beats进行数据采集， Logstash对采集后的数据进行过滤。    
+* 1.3 Elasticsearch + Kibana + Logstash + FileBeat    
+> 满足基本的日志file的收集处理和UI显示检索，使用Beats进行数据采集， Logstash对采集后的数据进行过滤。     
+
+![img1](imgs/ELK2.png)  
 
 * 1.4 Elasticsearch + Logstash + Kibana + Beats  + redis/kafka    
 > 满足基本的日志file的收集处理和UI显示检索，使用Beats进行数据采集，采用缓存服务器作为日志源文件的中转，减轻应用服务端日志提取过滤分析的压力。    
@@ -53,7 +55,9 @@
 Logstash -> Kafka/redis -> Logstash -> Elasticsearch -> Kibana    
 演变为：  
 filebeat -> Kafka/redis -> Logstash -> Elasticsearch -> Kibana    
-即：在应用服务器端，使用filebeat替代Logstash进行日志提取，以提升性能。    
+即：在应用服务器端，使用filebeat替代Logstash进行日志提取，以提升性能。   
+
+![img1](imgs/ELK3.png)      
 
 #### Elasticsearch Beats    
 >  Lightweight Data Shippers, Beats is the platform for single-purpose data shippers. They install as lightweight agents and send data from hundreds or thousands of machines to Logstash or Elasticsearch.  
