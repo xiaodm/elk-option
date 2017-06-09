@@ -1,0 +1,27 @@
+curl -XPUT 'localhost:9200/_xpack/watcher/watch/log_error_watch?pretty' -H 'Content-Type: application/json' -d'
+{
+  "trigger" : { "schedule" : { "interval" : "10s" }},
+  "input" : {
+    "search" : {
+      "request" : {
+        "indices" : [ "filebeat-*" ],
+        "body" : {
+          "query" : {
+            "match" : { "message": "error" }
+          }
+        }
+      }
+    }
+  },
+  "condition" : {
+    "compare" : { "ctx.payload.hits.total" : { "gt" : 0 }}
+  },
+  "actions" : {
+    "log_error" : {
+      "logging" : {
+        "text" : "Found {{ctx.payload.hits.total}} errors in the logs"
+      }
+    }
+  }
+}
+'

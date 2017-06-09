@@ -1,0 +1,19 @@
+
+License expiration should never be a surprise. If you¡¯re using Monitoring, a license expiration warning is displayed prominently if your license expires within 30 days. Warnings are also displayed on startup and written to the Elasticsearch log starting 30 days from the expiration date. These error messages tell you when the license expires and what features will be disabled if you fail to update it.
+
+# License [will expire] on [Friday, December 30, 2016]. If you have a new license, please update it.
+# Otherwise, please reach out to your support contact.
+#
+# Commercial plugins operate with reduced functionality on license expiration:
+# - security
+#  - Cluster health, cluster stats and indices stats operations are blocked
+#  - All data operations (read and write) continue to work
+# - watcher
+#  - PUT / GET watch APIs are disabled, DELETE watch API continues to work
+#  - Watches execute and write to the history
+#  - The actions of the watches don't execute
+# - monitoring
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [xpack.monitoring.history.duration]
+# - graph
+#  - Graph explore APIs are disabled
