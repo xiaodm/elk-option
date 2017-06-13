@@ -1,0 +1,74 @@
+# Alert when the rate of events exceeds a threshold
+
+# (Optional)
+# Elasticsearch host
+es_host: localhost
+
+# (Optional)
+# Elasticsearch port
+es_port: 9200
+
+# (OptionaL) Connect with SSL to Elasticsearch
+#use_ssl: True
+
+# (Optional) basic-auth username and password for Elasticsearch
+es_username: elastic
+es_password: changeme
+
+# (Required)
+# Rule name, must be unique
+name: Example frequency rule
+
+# (Required)
+# Type of alert.
+# the frequency rule type alerts when num_events events occur with timeframe time
+type: frequency
+
+# (Required)
+# Index to search, wildcard supported
+index: filebeat-*
+
+# (Required, frequency specific)
+# Alert when this many documents matching the query occur within a timeframe
+num_events: 2
+
+# (Required, frequency specific)
+# num_events must occur within this amount of time to trigger an alert
+timeframe:
+  #hours: 4
+  minutes: 5
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+#- term:
+#    some_field: "some_value"
+- query:
+    query_string:
+      query: "message: *error*"
+
+      #SMTP协议的邮件服务器相关配置
+#smtp.163.com是网易163邮箱的smtp服务器
+#登陆163邮箱后，找到 【设置】>【POP3/SMTP/IMAP】>开启，然后设置【客户端授权密码】
+smtp_host: smtp.126.com
+smtp_port: 25
+
+#用户认证文件，需要user和password两个属性
+#注意将${userName}替换成具体用户名
+smtp_auth_file: /usr/local/elk-extend/elastalert/example_rules/smtp_auth_file.yaml
+#回复给那个邮箱
+email_reply_to: xiao091586@126.com
+#从哪个邮箱发送
+from_addr: xiao091586@126.com
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "email"
+
+# (required, email specific)
+# a list of email addresses to send alerts to
+email:
+- "1926925205@qq.com"
