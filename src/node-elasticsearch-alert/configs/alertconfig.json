@@ -1,0 +1,68 @@
+{
+    "name": "the alert server for elk log",
+    "schedule_time": "1",
+    "buffer_time": 10,
+    "alert_retry_period": "",
+    "": "",
+    "elasticsearch": {
+        "es_host":"192.168.6.166",
+        "es_port":"9200",
+        "es_usr":"elastic",
+        "es_pwd":"changeme"
+    },
+    "rule": {
+        "type": "any",
+        "num_events": "",
+        "timeframe": ""
+    },
+    "filter": {
+        "index": "filebeat-*",
+        "type": "test",
+        "body": {
+            "size": 5,
+            "sort": [{
+                "@timestamp": {
+                    "order": "desc",
+                    "unmapped_type": "boolean"
+                }
+            }],
+            "query": {
+                "bool": {
+                    "must": [{
+                        "query_string": {
+                            "query": "message: \"error\"",
+                            "analyze_wildcard": true
+                        }
+                    }]
+                }
+            }
+        }
+    },
+    "alert": {
+        "email": {
+            "enabled": "1",
+            "module_path": "",
+            "smtp_host": "126",
+            "smtp_port": "25",
+            "smtp_auth_user": "xiao091586@126.com",
+            "smtp_auth_pwd": "xiao533968",
+            "subject":"error log alert",
+            "email_reply_to": "xiao091586@126.com",
+            "from_addr": "xiao091586@126.com",
+            "to":"1926925205@qq.com"
+        },
+        "qiye_weixin": {
+            "enabled": "1",
+            "module_path": "",
+            "corp_id": "ww1e0adaecdb33285f",
+            "secret": "s_j-9ynUnquR9gopJyeLag_w5_wagD95yBkwdMHSoOs",
+            "agent_id": "1000002",
+            "party_id": "",
+            "user_id": "XiaoDiMing",
+            "tag_id": ""
+        },
+        "sms": {
+            "enable": "0"
+        }
+    }
+}
