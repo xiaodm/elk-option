@@ -49,7 +49,9 @@
 ![img1](imgs/ELK2.png)  
 
 * 1.4 Elasticsearch + Logstash + Kibana + Beats  + redis/kafka    
-> 满足基本的日志file的收集处理和UI显示检索，使用Beats进行数据采集，采用缓存服务器作为日志源文件的中转，减轻应用服务端日志提取过滤分析的压力。    
+> 满足基本的日志file的收集处理和UI显示检索，使用Beats进行数据采集，采用缓存服务器作为日志源文件的中转，  
+一是可以减轻应用服务端日志提取过滤分析的压力；  
+再者作为一个缓存，能够帮助我们在主节点上屏蔽掉多个从节点之间不同日志文件的差异，负责管理日志端（从节点）的人可以专注于向缓存里生产数据，而负责数据分析聚合端的人则可以专注于从缓存内消费数据。    
 [链接：Logstash性能及替代方案](http://www.cnblogs.com/richaaaard/p/6109595.html)  
 由传统的：   
 Logstash -> Kafka/redis -> Logstash -> Elasticsearch -> Kibana    

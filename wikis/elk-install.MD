@@ -1,5 +1,10 @@
 # ELK 单机环境搭建  
-本文档介绍最简单的ELK在`CentOS 7`环境搭建：`elasticsearch` + `filebeat` + `kibana`
+本文档介绍最简单的ELK在`CentOS 7`环境搭建：`elasticsearch` + `filebeat` + `kibana`  
+
+## 安装环境  
+* CentOS-7-x86_64-Minimal-1611.iso  
+* jdk-8u92-linux-x64.rpm  
+* [Elastic Stack 5](https://www.elastic.co/cn/products)
 
 # JDK安装  
 
@@ -58,7 +63,7 @@ bin/elasticsearch
 修改：
 vim config/elasticsearch.yml
 增加:  
-network.host: 0.0.0.0  
+network.host: 0.0.0.0  # 或当前机器IP  
 ```  
 
 > 启动报错：  
@@ -82,7 +87,7 @@ network.host: 0.0.0.0
 修改：
 vi config/kibana.yml
 增加:  
-server.host: 0.0.0.0    
+server.host: 0.0.0.0    # 或当前机器IP  
 ```   
 
 这里直接使用`root`用户安装:  
