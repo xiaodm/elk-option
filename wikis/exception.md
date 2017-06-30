@@ -15,7 +15,7 @@
 
 ## 异常规范
 
-- 不丢弃异常
+- 不丢弃异常，异常出现，一般表示程序有问题，需要处理。
 - 指定更明确异常
 - 不要将异常用于控制流,仅为异常情况使用异常
 - 记录异常产生详细信息（位置，堆栈，时间）
@@ -27,7 +27,7 @@ try/catch
 
 ----------
 
-try/catch用来处理同步的异常，try代码块中出现异常时，会在catch中捕获，catch中可以选择记录异常日志，处理异常或者抛出新异常。
+`try/catch`用来处理同步的异常，`try`代码块中出现异常时，会在`catch`中捕获，`catch`中可以选择记录异常日志，处理异常或者抛出新异常。
 
     let bunyan = require('bunyan');
     let log = bunyan.createLogger({
@@ -53,7 +53,7 @@ callback
 
 ----------
 
-callback在node模块中很常见，回调的第一个参数默认为err，如果err为null，表示回调之前程序处理正确，如果不为null，表示回调之前程序处理发生异常。
+`callback`在node模块中很常见，回调的第一个参数默认为`err`，如果`err`为`null`，表示回调之前程序处理正确，如果不为`null`，表示回调之前程序处理发生异常。
 
     let bunyan = require('bunyan');
     let log = bunyan.createLogger({
@@ -79,11 +79,11 @@ callback在node模块中很常见，回调的第一个参数默认为err，如�
         }
     })
 
-event listen
+event emitter
 
 ----------
 
-event listen用于监听指定异常，也是异步处理。
+`event emitter`用于监听指定异常，也是异步处理。
 
     let bunyan = require('bunyan');
     let log = bunyan.createLogger({
@@ -121,7 +121,7 @@ domain
 
 ----------
 
-不建议使用，准备废弃，不能捕获所有的异步异常
+`domain`不建议使用，准备废弃，不能捕获所有的异步异常
 
     var domain = require('domain');
     
@@ -151,7 +151,7 @@ uncaughtException
 
 ----------
 
-uncaughtException 错误会导致当前的所有的用户连接都被中断，甚至不能返回一个正常的 HTTP 错误码，用户只能等到浏览器超时才能看到一个 no data received 错误。
+`uncaughtException`错误会导致当前的所有的用户连接都被中断，甚至不能返回一个正常的 HTTP 错误码，用户只能等到浏览器超时才能看到一个 no data received 错误。
 
 这是一种非常野蛮粗暴的异常处理机制，任何线上服务都不应该因为 uncaughtException 导致服务器崩溃。一个友好的错误处理机制应该满足三个条件:
 
@@ -181,7 +181,7 @@ uncaughtException 事件的缺点在于无法为抛出异常的用户请求返�
 
 ## koa中处理错误
 
-`koa`内部做了处理，我们可以直接使用 catch 来捕获异步代码中的错误。比如下面的例子：
+`koa`内部做了处理，我们可以直接使用`catch`来捕获异步代码中的错误。比如下面的例子：
 
     const fs = require('fs');
     const Promise = require('bluebird');
@@ -194,7 +194,7 @@ uncaughtException 事件的缺点在于无法为抛出异常的用户请求返�
       // error here
     }
 
-在`koa`中，推荐统一使用 try/catch 的方式来进行错误的触发和捕获，这会让代码更加易读，防止被绕晕。
+在`koa`中，推荐统一使用`try/catch`的方式来进行错误的触发和捕获，这会让代码更加易读，防止被绕晕。
 
 
 ## 参考链接

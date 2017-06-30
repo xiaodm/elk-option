@@ -162,7 +162,11 @@ bunyan不支持记录请求详情和requestId，`koa-bunyan-logger`提供了这�
 1. 对于应用程序，推荐约定存储在一个统一的位置（比如`/var/log/${projectName}`），这样方便`filebeat`或者`logstash`去拉取。
 2. 应用程序中，推荐至少记录`info`和`error`日志，并且分别命名两个文件（比如${projectName}_info_20170620.log和${projectName}_error_20170620.log}，`debug`可以在开发或测试环境中使用，生产环境一般不使用。`info`是bunyan默认日志级别，一般记录应用调用轨迹或关键信息，以便应用出错时方便跟踪定位问题，`error`表示应用出错或者异常信息，要引起特别重视。
 3. 日志存储策略可以根据每个应用自身日志输出大小和重要度进行配置，对于一般应用的`info`日志，推荐至少保留一个月日志，`error`日志保留三个月。
-4. 日志记录格式也可以根据具体应用而定，重要信息一般是必须记录的，比如userId，orderId，requestId等等。
+4. 日志应该记录具体输出的文件和行号，以便定位，bunyan中设置src为true，会自动记录该信息，异常日志应该保留其原始堆栈信息，不要丢掉或者转换，bunyan中将err对象传入log.error(err)中即可。
+5. 日志应该记录具体输出时间，先输出的一定记录在后输出前面，如果涉及多台服务器，多个应用相互调用，时间无法一致，可以采用逻辑一致。
+6. 日志记录格式也可以根据具体应用而定，重要信息一般是必须要记录的，比如userId，orderId，requestId等等。
+7. 日志应该具有可读性，bunyan输出json日志，可读性比较差，如果是调试，可以使用`node_modules/.bin/bunyan`美化输出
+
 
 #### 参考链接
 1. [npm bunyan](https://www.npmjs.com/package/bunyan)
