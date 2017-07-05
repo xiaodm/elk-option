@@ -23,6 +23,7 @@
     "koa-static": "^1.5.2",
     "koa-views": "^5.0.1",
     "mysql": "^2.11.1",
+    "node-schedule": "^1.2.3",
     "runkoa": "^1.5.2",
     "sequelize": "^3.24.6"
   },

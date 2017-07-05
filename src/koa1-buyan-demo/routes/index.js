@@ -8,6 +8,17 @@ router.get('/', function *(next) {
     this.body = 'this a index resp!';
 });
 
+router.get('/business/cpu', function *(next) {
+    setInterval(function () {
+        for (let i = 0; i < 5000000000; i++) {
+            if (i === 400000000) {
+
+            }
+        }
+    }, 2000);
+    this.body = 'this a cpu Time-consuming excute!';
+});
+
 
 router.get('/change-log-level/:level', function *(next) {
     let level = Number.parseInt(this.params.level);

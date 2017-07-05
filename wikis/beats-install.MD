@@ -36,7 +36,13 @@ output.elasticsearch:
 ## 4. 加载`kibana`的索引匹配 
 
 ```  
- ./scripts/import_dashboards -only-index   
+ ./scripts/import_dashboards -only-index     
+ 
+```  
+
+> 如果使用了SSL,拷贝认证证书到scripts目录后，执行：  
+```  
+./scripts/import_dashboards -only-index  -es https://localhost:9200 -user admin -pass admin  -cacert ./scripts/root-ca.crt  
 ```
 
 加载索引匹配时，`elasticsearch`应该处于启动状态，否则会报连接错误

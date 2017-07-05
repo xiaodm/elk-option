@@ -46,6 +46,9 @@ app.listen(3233);
 
 logger.info('app started at port 3233');
 
+let perfor=require('./utils/performance');
+perfor();
+
 app.on('error', function (err, ctx) {
     logger.error('server error', err, ctx);
 });
