@@ -7,6 +7,7 @@
 # You can find the full configuration reference here:
 # https://www.elastic.co/guide/en/beats/filebeat/index.html
 
+
 #=========================== Filebeat prospectors =============================
 
 filebeat.prospectors:
@@ -14,20 +15,15 @@ filebeat.prospectors:
 # Each - is a prospector. Most options can be set at the prospector level, so
 # you can use different prospectors for various configurations.
 # Below are the prospector specific configurations.
-- input_type: log
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /usr/local/testlogs/*/*.log
-  document_type: test-koa-log  
 
 - input_type: log
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /var/log/*.log
+    #- /var/log/*.log
     #- c:\programdata\elasticsearch\logs\*
-  document_type: default-log  
+    - /usr/local/nginx/logs/access.log
+    - /var/log/test-log.log
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
@@ -62,13 +58,36 @@ filebeat.prospectors:
   # that was (not) matched before or after or as long as a pattern is not matched based on negate.
   # Note: After is the equivalent to previous and before is the equivalent to to next in Logstash
   #multiline.match: after
+  
+  document_type: filebeat    
+  
+- input_type: log
 
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /home/xiaodiming/koa1-buyan-demo/logs/*/*.log
+    #- /usr/local/testlogs/test.log
+  
+  document_type: test-koa-log      
+
+- input_type: log
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /home/xiaodiming/koa1-buyan-demo-app2/koa1-buyan-demo/logs/*/*.log
+  
+  document_type: test2-koa2-log2   
+
+- input_type: log
+
+  paths:
+    - /home/zhangzhengxiong/ws/OEMSpecialStrategy/logs/*.log  
 
 #================================ General =====================================
 
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
-#name:
+name: 172.16.8.199
 
 # The tags of the shipper are included in their own field with each
 # transaction published.
@@ -87,12 +106,31 @@ filebeat.prospectors:
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
+  hosts: ["https://172.16.8.199:9200"]
+  pipeline: "bunyan-pipeline"
 
   # Optional protocol and basic auth credentials.
-  # protocol: "https"
-  username: "elastic"
-  password: "changeme"
+  #protocol: "https"
+  username: "admin"
+  password: "admin"
+  
+  #ssl.certificate_authorities: ["/usr/local/elk/elasticsearch/search-guard-ssl-ves-5.4.1-22/example-pki-scripts/ca/root-ca.pem"]
+  # 如果是自签名证书，可设置为none，即不验证服务器证书
+  ssl.verification_mode: none
+
+  # Set to false to disable template loading.
+  #template.enabled: true
+
+  # Template name. By default the template name is filebeat.
+  #template.name: "filebeat"
+
+  # Path to template file
+  #template.path: "/usr/local/elk/beats/filebeat/filebeat-5.4.1-linux-x86_64/filebeat.template.json"
+
+  # Overwrite existing template
+  #template.overwrite: true
+
+
 
 #----------------------------- Logstash output --------------------------------
 #output.logstash:

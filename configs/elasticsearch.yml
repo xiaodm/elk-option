@@ -53,9 +53,6 @@
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
 #network.host: 192.168.0.1
-
-network.host: 0.0.0.0 
-
 #
 # Set a custom port for HTTP:
 #
@@ -90,15 +87,16 @@ network.host: 0.0.0.0
 #
 #action.destructive_requires_name: true
 
-xpack.notification.email.account:
-    qmail_account:
-        profile: 126mail
-        smtp:
-            auth: true
-            starttls.enable: true
-            host: smtp.126.com 
-            port: 25
-            user: xiao091586@126.com
-            password: xiao533968
-            
-            
+######## Start Search Guard Demo Configuration ########
+searchguard.ssl.transport.keystore_filepath: node-0-keystore.jks
+searchguard.ssl.transport.truststore_filepath: truststore.jks
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.http.enabled: true
+searchguard.ssl.http.keystore_filepath: node-0-keystore.jks
+searchguard.ssl.http.truststore_filepath: truststore.jks
+searchguard.authcz.admin_dn:
+  - CN=kirk,OU=client,O=client,L=test, C=de
+
+cluster.name: searchguard_demo
+network.host: 0.0.0.0
+######## End Search Guard Demo Configuration ########
