@@ -2,12 +2,9 @@
  * Created by deexiao on 2017/7/4.
  */
 let bunyan = require('bunyan');
-const schedule = require("node-schedule");
-const {exec} = require('child_process');
-const os = require('os');
 let log_path = '/usr/local/testlogs/nodemetriclogs';
 //let log_path = 'logs/performance';
-
+const node_monitor = require('./node-monitor');
 //app日志文件
 const logger = bunyan.createLogger({
     name: 'koa1-users',
@@ -25,45 +22,28 @@ const logger = bunyan.createLogger({
     ]
 });
 
-function getCpuUsageBystdout(stdout) {
-    try {
-        let strArr = stdout.split('\n');
-        if (strArr.length > 1) {
-            let valueArr = strArr[1].split(/\s+/);
-            return parseFloat(valueArr[2]);
-        }
-        else {
-            return 0;
-        }
-    } catch (e) {
-        logger.error(e);
-        return 0;
-    }
-}
-
+// 开始性能日志收集：memory、cpu、loop delay
 module.exports = function LogPerformance() {
-    schedule.scheduleJob(`*/5 * * * * *`, function () {
-        try {
-            let memoryUsage = process.memoryUsage();
-            let pid = process.pid;
+    node_monitor.getCpuMemUsage(function (rlt, err) {
+        logger.info(
+            {
+                rss: rlt.rss,
+                heaptotal: rlt.heaptotal,
+                heapused: rlt.heapused,
+                external: rlt.external,
+                cpuprocess: rlt.cpuprocess,
+                monitortype: 1
+            }, 'performance datas');
+        if (err) {
+            logger.error(err);
+        }
+    }, {scheduleInterval: `*/5 * * * * *`});
 
-            exec('ps -u --pid ' + pid, function (err, stdout, stderrr) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                logger.info(
-                    {
-                        rss: memoryUsage.rss,
-                        heaptotal: memoryUsage.heapTotal,
-                        heapused: memoryUsage.heapUsed,
-                        external: memoryUsage.external,
-                        cpuprocess: getCpuUsageBystdout(stdout)
-                    }, 'performance datas')
-            });
-        }
-        catch (e) {
-            logger.error(e);
-        }
-    });
+    node_monitor.getLoopDelay(function (delay) {
+        logger.info(
+            {
+                loopdelay: Math.round(parseFloat(delay)*100)/100,
+                monitortype: 2
+            }, 'performance datas')
+    }, {time_interval: 2000})
 };
