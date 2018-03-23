@@ -1,6 +1,6 @@
-# ELK日志分析框架   
+# 基于ElasticSearch的日志分析框架   
       
-> 	no-taf项目使用，满足日志收集，监控，检索，预警等。   
+> 满足日志收集，监控，检索，预警等。   
   
 ## 初步需求    
 *  [x] 要具备显示调用方文件名和行号的能力  
@@ -48,7 +48,7 @@
 	- [异常处理规范](wikis/exception.md)
 	- [日志调用及输出约定](wikis/log-contrat-bunyan.MD)
 	- [日志存储策略](wikis/logrotate.md)
-	- ELK索引模板定制
+	- Elasticsearch索引模板定制
 
 
 
